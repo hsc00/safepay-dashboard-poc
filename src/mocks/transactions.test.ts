@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import * as Mocks from "../mocks/transactions";
+import * as Mocks from "./transactions";
 
 describe("Detailed Transaction State Validation", () => {
   it("should validate COMPLETED transactions as positive flow", () => {
