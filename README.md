@@ -1,4 +1,5 @@
 # SafePay Settlement Dashboard
+https://github.com/hsc00/safepay-dashboard/actions/workflows/ci.yml/badge.svg
 
 A high-performance PoC for a Financial Settlement Dashboard developed for SafePay. This project simulates a hybrid asset management interface (Fiat & Crypto), focusing on security, data integrity, and automated code quality.
 
