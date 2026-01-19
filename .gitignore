@@ -8,6 +8,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+coverage
+*.lcov
+clover.xml
+coverage-final.json
 dist
 dist-ssr
 *.local
