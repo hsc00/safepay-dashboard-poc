@@ -12,6 +12,12 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "lcov", "clover"],
       reportsDirectory: "./coverage",
+      exclude: [
+        "src/test/setup.ts",
+        "src/main.tsx",
+        "**/*.test.tsx",
+        "dist/**",
+      ],
     },
   },
 });
