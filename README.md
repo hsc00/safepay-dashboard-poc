@@ -1,6 +1,7 @@
 # SafePay Settlement Dashboard
 
 ![CI Status](https://github.com/hsc00/vantage-poc/actions/workflows/ci.yml/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hsc00_safepay-dashboard&metric=alert_status&token=1bacbf2aefade62e3abbbf931d14fbdeb9568744)](https://sonarcloud.io/summary/new_code?id=hsc00_safepay-dashboard)
 
 A high-performance PoC for a Financial Settlement Dashboard developed for SafePay. This project simulates a hybrid asset management interface (Fiat & Crypto), focusing on security, data integrity, and automated code quality.
 
