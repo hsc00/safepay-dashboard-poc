@@ -22,7 +22,7 @@ export const PENDING_CRYPTO_TRANSACTION: Transaction = {
 
 export const FLAGGED_TRANSACTION: Transaction = {
   id: "tx_003",
-  amount: 50000.0,
+  amount: 50000,
   currency: "EUR",
   status: "FLAGGED",
   counterparty: "Unknown Entity",
@@ -32,7 +32,7 @@ export const FLAGGED_TRANSACTION: Transaction = {
 
 export const CANCELLED_TRANSACTION: Transaction = {
   id: "tx_004",
-  amount: -450.0,
+  amount: -450,
   currency: "CHF",
   status: "CANCELLED",
   counterparty: "Utility Zurich AG",
@@ -42,7 +42,7 @@ export const CANCELLED_TRANSACTION: Transaction = {
 
 export const FAILED_TRANSACTION: Transaction = {
   id: "tx_005",
-  amount: 120.0,
+  amount: 120,
   currency: "CHF",
   status: "FAILED",
   counterparty: "Starbucks Zurich",
