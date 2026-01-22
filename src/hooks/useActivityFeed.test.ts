@@ -3,7 +3,6 @@ import { renderHook, act } from "@testing-library/react";
 import { useActivityFeed } from "./useActivityFeed";
 import { MOCK_TRANSACTIONS } from "../mocks/transactions";
 
-// Strict typing for Zod and DOM
 type UUID = `${string}-${string}-${string}-${string}-${string}`;
 
 vi.mock("../mocks/transactions", () => ({
@@ -39,11 +38,24 @@ vi.mock("../mocks/transactions", () => ({
 }));
 
 describe("useActivityFeed", () => {
+  let mockRandomValues: number[] = [];
+
   beforeEach(() => {
     vi.useFakeTimers().setSystemTime(new Date("2026-01-22T19:00:00Z"));
+
+    mockRandomValues = [];
+
     vi.stubGlobal("crypto", {
       randomUUID: () => "550e8400-e29b-41d4-a716-446655440000" as UUID,
+      getRandomValues: (array: Uint32Array | Uint8Array) => {
+        for (let i = 0; i < array.length; i++) {
+          array[i] =
+            mockRandomValues.shift() ?? Math.floor(Math.random() * 255);
+        }
+        return array;
+      },
     });
+
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
@@ -55,7 +67,6 @@ describe("useActivityFeed", () => {
 
   it("should calculate balance correctly (CHF + EUR conversion)", () => {
     const { result } = renderHook(() => useActivityFeed());
-
     expect(result.current.metrics.totalBalance).toBe(205);
     expect(result.current.metrics.cryptoBalance).toBe(1);
     expect(result.current.transactions.length).toBe(3);
@@ -84,15 +95,14 @@ describe("useActivityFeed", () => {
 
   it("should cover price variation branches", () => {
     const { result, unmount } = renderHook(() => useActivityFeed(1000));
-    const randomSpy = vi.spyOn(Math, "random");
     const baseCount = result.current.metrics.activeTransactionsCount;
 
-    randomSpy.mockReturnValue(0.9);
+    mockRandomValues = [0, 200];
     act(() => {
       vi.advanceTimersByTime(1000);
     });
 
-    randomSpy.mockReturnValue(0.1);
+    mockRandomValues = [1, 50];
     act(() => {
       vi.advanceTimersByTime(1000);
     });

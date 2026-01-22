@@ -12,6 +12,12 @@ const EUR_TO_CHF_RATE = 1.05;
 
 const INVALID_BALANCE_STATUSES = new Set(["CANCELLED", "FAILED", "FLAGGED"]);
 
+const getSecureRandomIndex = (limit: number): number => {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return array[0] % limit;
+};
+
 const validateItem = (rawData: unknown): Transaction | null => {
   const result = TransactionSchema.safeParse(rawData);
   if (!result.success) {
@@ -57,13 +63,16 @@ export const useActivityFeed = (interval = REFRESH_INTERVAL_MS) => {
   // Live Feed
   useEffect(() => {
     const activityInterval = setInterval(() => {
-      const baseTemplate =
-        MOCK_TRANSACTIONS[Math.floor(Math.random() * MOCK_TRANSACTIONS.length)];
+      const randomIndex = getSecureRandomIndex(MOCK_TRANSACTIONS.length);
+      const baseTemplate = MOCK_TRANSACTIONS[randomIndex];
 
-      const priceVariation =
-        Math.random() > 0.5
-          ? 1 + PRICE_VARIATION_PERCENTAGE
-          : 1 - PRICE_VARIATION_PERCENTAGE;
+      const randomBuffer = new Uint8Array(1);
+      crypto.getRandomValues(randomBuffer);
+      const isPositiveVariation = randomBuffer[0] > 127;
+
+      const priceVariation = isPositiveVariation
+        ? 1 + PRICE_VARIATION_PERCENTAGE
+        : 1 - PRICE_VARIATION_PERCENTAGE;
 
       const rawNewTransaction = {
         ...baseTemplate,
